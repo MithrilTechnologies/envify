@@ -1,5 +1,5 @@
 import 'dart:io' show File;
-import 'package:dotenv/dotenv.dart' show Parser;
+import 'package:dotenv/dotenv.dart';
 
 /// Load the environment variables from the supplied [path],
 /// using the `dotenv` parser.
@@ -10,16 +10,14 @@ Future<Map<String, String>> loadEnvs(
   String path,
   Function(String) onError,
 ) async {
-  const parser = Parser();
   final file = File.fromUri(Uri.file(path));
+  final fileExists = await file.exists();
 
-  var lines = <String>[];
-  if (await file.exists()) {
-    lines = await file.readAsLines();
-  } else {
+  if (!fileExists) {
     onError("Environment variables file doesn't exist at `$path`.");
   }
 
-  final envs = parser.parse(lines);
-  return envs;
+  final envs = DotEnv(includePlatformEnvironment: true)..load([path]);
+
+  return envs.map;
 }
