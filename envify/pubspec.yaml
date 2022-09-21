@@ -1,7 +1,7 @@
 name: envify
 description: A better way to handle environment variables using `.env` file.
-version: 2.0.2
-homepage: https://github.com/frencojobs/envify
+version: 2.0.3
+homepage: https://github.com/MithrilTechnologies/envify
 
 environment:
   sdk: ">=2.12.0-0 <3.0.0"
